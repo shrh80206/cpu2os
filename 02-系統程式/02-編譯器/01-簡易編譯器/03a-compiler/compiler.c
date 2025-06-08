@@ -95,12 +95,13 @@ void STMT() {
     WHILE();
   // else if (isNext("if"))
   //   IF();
+  else if (isNext("do"))
+    DOWHILE();
   else if (isNext("{"))
     BLOCK();
   else
     ASSIGN();
 }
-
 // STMTS = STMT*
 void STMTS() {
   while (!isEnd() && !isNext("}")) {
