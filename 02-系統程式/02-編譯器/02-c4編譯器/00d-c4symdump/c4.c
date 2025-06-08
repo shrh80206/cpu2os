@@ -312,6 +312,35 @@ void stmt() // 陳述 statement
     }
     *b = (int)(e + 1);
   }
+else if (tk == Do) {
+  next();              // 跳過 'do'
+  int *a = ++e;        // 標記回圈開始位置
+  *e = 0;
+
+  stmt();              // 解析 do 的主體（通常是 block）
+
+  if (tk != While) {
+    printf("%d: expected while after do\n", line);
+    exit(-1);
+  }
+  next();              // 跳過 'while'
+
+  if (tk != '(') {
+    printf("%d: expected ( after while\n", line);
+    exit(-1);
+  }
+  next();              // 跳過 '('
+  expr(Assign);        // 解析條件表達式
+
+  if (tk != ')') {
+    printf("%d: expected ) after condition\n", line);
+    exit(-1);
+  }
+  next();              // 跳過 ')'
+
+  *++e = BNZ;          // 如果條件為真就跳回回圈起點
+  *++e = (int)a;
+}
   else if (tk == While) { // while 語句
     next();
     a = e + 1;
