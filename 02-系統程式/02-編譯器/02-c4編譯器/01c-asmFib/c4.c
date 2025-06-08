@@ -94,16 +94,32 @@ int main() // 主程式
 
 // 3: int f(int n) {
 // 4:   if (n<=0) return 0;
-  fib = e;
-  *e++ = ENT; *e++ = 0;
-  *e++ = LLA; *e++ = 2;
-  *e++ = LI;
-  *e++ = PSH;
-  *e++ = IMM; *e++ = 0;
-  *e++ = LE;
-  *e++ = BZ; loc=e; *e++ = 0; 
-  *e++ = IMM; *e++ = 0;
-  *e++ = LEV;
+power2 = e;
+*e++ = ENT; *e++ = 0;
+*e++ = LLA; *e++ = 2;
+*e++ = LI;
+*e++ = PSH;
+*e++ = IMM; *e++ = 1;
+*e++ = LE;
+*e++ = BZ; loc = e; *e++ = 0;
+*e++ = IMM; *e++ = 1;
+*loc = (int)e;
+*e++ = LLA; *e++ = 2;
+*e++ = LI;
+*e++ = PSH;
+*e++ = IMM; *e++ = 1;
+*e++ = ADD;
+*e++ = PSH;
+*e++ = LLA; *e++ = 2;
+*e++ = LI;
+*e++ = PSH;
+*e++ = IMM; *e++ = 1;
+*e++ = SUB;
+*e++ = PSH;
+*e++ = JSR; *e++ = (int)power2;
+*e++ = ADJ; *e++ = 1;
+*e++ = MUL;
+*e++ = LEV;
 // 5:   if (n==1) return 1;
   *loc = (int) e; *e++ = LLA; *e++ = 2;
   *e++ = LI;
@@ -140,18 +156,17 @@ int main() // 主程式
 // 9: int main() {
 // 10:   printf("f(7)=%d\n", f(7));
   pc = e;
-  *e++ = ENT; *e++ = 0;
-  *e++ = IMM; *e++ = (int) "f(7)=%d\n";
-  *e++ = PSH;
-  *e++ = IMM; *e++ = 7;
-  *e++ = PSH;
-  *e++ = JSR; *e++ = (int) fib;
-  *e++ = ADJ; *e++ = 1;
-  *e++ = PSH;
-  *e++ = PRTF;
-  *e++ = ADJ; *e++ = 2;
-// 11: }
-  *e++ = LEV;
+*e++ = ENT; *e++ = 0;
+*e++ = IMM; *e++ = (int) "power2(3) = %d\n";
+*e++ = PSH;
+*e++ = IMM; *e++ = 3;
+*e++ = PSH;
+*e++ = JSR; *e++ = (int) power2;
+*e++ = ADJ; *e++ = 1;
+*e++ = PSH;
+*e++ = PRTF;
+*e++ = ADJ; *e++ = 2;
+*e++ = LEV;
 
   // setup stack
   bp = sp = (int *)((int)sp + poolsz);
